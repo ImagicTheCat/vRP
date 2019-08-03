@@ -16,9 +16,9 @@ cfg.audio_listener_rate = 15 -- audio listener position update rate
 cfg.audio_listener_on_player = false -- set the listener position on the player instead of the camera
 
 cfg.gui = {
-  anchor_minimap_width = 260,
-  anchor_minimap_left = 60,
-  anchor_minimap_bottom = 213
+  anchor_minimap_width = 270,
+  anchor_minimap_left = 29,
+  anchor_minimap_bottom = 18
 }
 
 cfg.default_menu = true -- if false, will disable the default menu

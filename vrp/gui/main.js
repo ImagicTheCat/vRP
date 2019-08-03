@@ -1,3 +1,6 @@
+ //progress bar ticks (25fps)
+const frameTimeout = 1/25.0*1000;
+
 window.addEventListener("load",function(){
   //init dynamic menu
   var dynamic_menu = new Menu();
@@ -20,16 +23,19 @@ window.addEventListener("load",function(){
   //init
   $.post("http://vrp/init",""); 
 
-  var pbars = {}
+  let pbars = {}
   var divs = {}
 
-  //progress bar ticks (25fps)
-  setInterval(function(){
-    for(var k in pbars){
-      pbars[k].frame(1/25.0*1000);
-    }
-
-  }, 1/25.0*1000);
+  function tickBar(force){
+    let t = setTimeout(() => {
+      clearTimeout(t);
+      for(let k in pbars){
+        pbars[k].frame();
+      }
+      tickBar();
+    }, force ? 0 : frameTimeout);
+  }
+  tickBar(true);
 
   //MESSAGES
   window.addEventListener("message",function(evt){ //lua actions
@@ -59,7 +65,7 @@ window.addEventListener("load",function(){
     }
     // PROGRESS BAR
     else if(data.act == "set_pbar"){
-      var pbar = pbars[data.pbar.name];
+      let pbar = pbars[data.pbar.name];
       if(pbar)
         pbar.removeDom();
 
@@ -67,17 +73,17 @@ window.addEventListener("load",function(){
       pbars[data.pbar.name].addDom();
     }
     else if(data.act == "set_pbar_val"){
-      var pbar = pbars[data.name];
+      let pbar = pbars[data.name];
       if(pbar)
         pbar.setValue(data.value);
     }
     else if(data.act == "set_pbar_text"){
-      var pbar = pbars[data.name];
+      let pbar = pbars[data.name];
       if(pbar)
         pbar.setText(data.text);
     }
     else if(data.act == "remove_pbar"){
-      var pbar = pbars[data.name]
+      let pbar = pbars[data.name]
       if(pbar){
         pbar.removeDom();
         delete pbars[data.name];
