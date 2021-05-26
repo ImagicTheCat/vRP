@@ -85,15 +85,16 @@ function Admin:teleportToMarker()
   if done then
     local x,y = table.unpack(Citizen.InvokeNative(0xFA7C7F0AADF25D09, blip, Citizen.ResultAsVector())) -- GetBlipInfoIdCoord fix
 
-    local gz, ground = 0, false
-    for z=0,800,50 do
-      SetEntityCoordsNoOffset(ped, x+0.001, y+0.001, z+0.001, 0, 0, 1);
-      ground, gz = GetGroundZFor_3dCoord(x,y,z+0.001)
+    local gz, ground = 0.0, false
+    for z=0,1000,5 do
+      SetEntityCoords(ped, x+0.0, y+0.0, z+0.0, 1,0,0,1)
+      Citizen.Wait(5)
+      ground, gz = GetGroundZFor_3dCoord(x + 0.0,y + 0.0,z + 0.0)
       if ground then break end
     end
 
     if ground then
-      vRP.EXT.Base:teleport(x,y,gz+3)
+      vRP.EXT.Base:teleport(x,y,gz+1.5)
     else
       vRP.EXT.Base:teleport(x,y,1000)
       GiveDelayedWeaponToPed(ped, 0xFBAB5776, 1, 0)

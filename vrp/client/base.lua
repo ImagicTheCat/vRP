@@ -110,6 +110,12 @@ function Base:getPosition()
   return x,y,z
 end
 
+function Base:getHeading()
+  local x = GetEntityHeading(GetPlayerPed(-1))
+  return x
+end
+
+
 -- return false if in exterior, true if inside a building
 function Base:isInside()
   local x,y,z = self:getPosition()
@@ -365,6 +371,7 @@ Base.tunnel.triggerRespawn = Base.triggerRespawn
 Base.tunnel.teleport = Base.teleport
 Base.tunnel.vehicleTeleport = Base.vehicleTeleport
 Base.tunnel.getPosition = Base.getPosition
+Base.tunnel.getHeading = Base.getHeading
 Base.tunnel.isInside = Base.isInside
 Base.tunnel.getSpeed = Base.getSpeed
 Base.tunnel.getNearestPlayers = Base.getNearestPlayers
