@@ -66,6 +66,7 @@ function Garage:__construct()
   end)
 end
 
+local custom = {}
 -- veh: vehicle game id
 -- return owner character id and model or nil if not managed by vRP
 function Garage:getVehicleInfo(veh)
@@ -121,7 +122,12 @@ function Garage:spawnVehicle(model, state, position, rotation)
     if not position then
       SetPedIntoVehicle(ped,nveh,-1) -- put player inside
     end
-    SetVehicleNumberPlateText(nveh, "P "..vRP.EXT.Identity.registration)
+	local plate_txt = GetVehicleNumberPlateText(nveh)
+	if plate_txt ~= custom.plate_txt then
+		SetVehicleNumberPlateText(nveh, "P "..vRP.EXT.Identity.registration)
+	else
+		SetVehicleNumberPlateText(nveh, custom.plate_txt)
+	end
     SetEntityAsMissionEntity(nveh, true, true)
     SetVehicleHasBeenOwnedByPlayer(nveh,true)
 
@@ -138,7 +144,6 @@ function Garage:spawnVehicle(model, state, position, rotation)
     vRP:triggerEvent("garageVehicleSpawn", model)
   end
 end
-
 -- return true if despawned
 function Garage:despawnVehicle(model)
   local veh = self.vehicles[model]
@@ -352,10 +357,10 @@ end
 -- VEHICLE STATE
 
 function Garage:getVehicleCustomization(veh)
-  local custom = {}
 
   custom.colours = {GetVehicleColours(veh)}
   custom.extra_colours = {GetVehicleExtraColours(veh)}
+  custom.plate_txt = GetVehicleNumberPlateText(veh)				-- custom txt
   custom.plate_index = GetVehicleNumberPlateTextIndex(veh)
   custom.wheel_type = GetVehicleWheelType(veh)
   custom.window_tint = GetVehicleWindowTint(veh)
@@ -394,7 +399,11 @@ function Garage:setVehicleCustomization(veh, custom)
   if custom.plate_index then 
     SetVehicleNumberPlateTextIndex(veh, custom.plate_index)
   end
-
+  
+  if custom.plate_txt then 
+    SetVehicleNumberPlateText(veh, custom.plate_txt)					-- custom plate txt
+  end
+  
   if custom.wheel_type then
     SetVehicleWheelType(veh, custom.wheel_type)
   end
