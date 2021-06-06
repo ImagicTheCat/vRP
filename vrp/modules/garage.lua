@@ -619,7 +619,11 @@ function Garage.event:playerSpawn(user, first_spawn)
 
     -- build garages
     for k,v in pairs(self.cfg.garages) do
-      local gtype,x,y,z = table.unpack(v)
+      local gtype,x,y,z,radius,height = table.unpack(v)
+
+      -- default values
+      if radius == nil then radius = 1 end
+      if height == nil then height = 1.5 end
 
       local group = self.cfg.garage_types[gtype]
       if group then
@@ -644,7 +648,7 @@ function Garage.event:playerSpawn(user, first_spawn)
         ment[2].pos = {x,y,z-1}
         vRP.EXT.Map.remote._addEntity(user.source,ment[1], ment[2])
 
-        user:setArea("vRP:garage:"..k,x,y,z,1,1.5,enter,leave)
+        user:setArea("vRP:garage:"..k,x,y,z,radius,height,enter,leave)
       end
     end
   end

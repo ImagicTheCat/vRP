@@ -113,11 +113,11 @@ Map.tunnel.setStateOfClosestDoor = Map.setStateOfClosestDoor
 
 === Map.PosEntity 
 
-Specialized entity with a position and default active behavior by distance.
+Specialized entity with a position, activation radius, activation height and default active behavior by distance.
 
 .config
 [horizontal]
-pos:: `{x,y,z}` (must be floats)
+pos:: `{x,y,z,radius(optional),height(optional)}` (must be floats)
 active_distance:: (optional) maximum distance for the entity to be active, default is 250
 
 === PoI

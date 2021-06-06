@@ -312,7 +312,7 @@ cfg.garage_types = {
   }
 }
 
--- {garage_type,x,y,z}
+-- {garage_type,x,y,z,radius(optional),height(optional)}
 cfg.garages = {
   {"compacts",-356.146, -134.69, 39.0097},
   {"coupe",723.013, -1088.92, 22.1829},
